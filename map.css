@@ -1,0 +1,110 @@
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  margin: 0 auto;
+  padding: 1em;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  position: relative;
+  z-index: 2; /* Keeps the header and slider clickable above the map layer */
+  display: flex;
+  gap: 1em;
+  align-items: baseline;
+  width: 100%;
+}
+
+header label {
+  margin-left: auto;
+}
+
+#time-slider {
+  width: 300px;
+}
+
+header time,
+header em {
+  display: block;
+  text-align: right;
+}
+
+header em {
+  color: #666;
+  font-style: italic;
+}
+
+#map {
+  position: relative; /* Keeps #map svg anchored inside the map */
+  flex: 1;            /* Fills the remaining height below the header */
+  width: 100%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+#map svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+#map svg circle,
+.legend > div {
+  --color-departures: steelblue;
+  --color-arrivals: darkorange;
+  --color: color-mix(
+    in oklch,
+    var(--color-departures) calc(100% * var(--departure-ratio)),
+    var(--color-arrivals)
+  );
+}
+
+#map svg circle {
+  fill: var(--color);
+  fill-opacity: 0.6;
+  stroke: white;
+  stroke-width: 1px;
+  pointer-events: auto;
+}
+
+.legend {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2em;
+  margin-block: 0.75em;
+}
+
+.legend > span {
+  text-transform: uppercase;
+  font-size: 0.85em;
+  font-weight: 500;
+  color: #666;
+}
+
+.legend > div {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+}
+
+.legend > div::before {
+  content: '';
+  width: 1.2em;
+  height: 1.2em;
+  border-radius: 50%;
+  background-color: var(--color);
+}
